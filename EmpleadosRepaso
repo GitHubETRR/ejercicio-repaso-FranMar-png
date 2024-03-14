@@ -1,0 +1,87 @@
+#include <stdio.h>
+#define MAX 50
+
+struct empleado{
+  char nombre[MAX];
+  unsigned int edad;
+  float salario;
+}empleado[5];
+
+//PROTOTIPOS
+void ingresarEmpleados(struct empleado empleado[5], int);
+void procesarEmpleados(struct empleado empleado[5]);
+void mostrarEmpleados(struct empleado empleado[5]);
+
+int main(void) {
+  int seleccion;
+  int x=0;
+  printf("Bienvenido al sistema de ingreso de empleados\n");
+  do{
+    //MENU
+    printf("Seleccione: \n 1. Ingresar 1 empleado (max 5)\n");
+    printf(" 2. Mostrar datos de empleados\n");
+    printf(" 3. Salir del programa\n");
+    scanf("%d", &seleccion);
+    //SWITCH SELECCION
+    switch(seleccion){
+      case 1:
+        ingresarEmpleados(empleado, x);
+        x++;
+        break;
+      case 2:
+        mostrarEmpleados(empleado);
+        procesarEmpleados(empleado);
+        break;
+      case 3:
+        printf("Saliendo del programa...");
+        break;
+      default:
+        printf("Opcion no valida");
+    }
+  }while(seleccion != 3);
+
+  return 0;
+}
+
+void ingresarEmpleados(struct empleado empleado[5], int x){
+  //INGRESO DATOS
+  if (x<5){
+    printf("\nIngrese el nombre del empleado: \n");
+    scanf(" %s", &empleado[x].nombre);
+    printf("\nIngrese la edad del empleado: \n");
+    scanf(" %d", &empleado[x].edad);
+    printf("\nIngrese el salario del empleado: \n");
+    scanf(" %f", &empleado[x].salario);
+  }else{
+    printf("No se pueden ingresar mas empleados \n");
+  }
+}
+void procesarEmpleados(struct empleado empleado[5]){
+  //PROCESAR DATOS
+  char nomMax[MAX];
+  float promedio=0;
+  float salMax=0;
+  int numEmpleMax=0;
+  
+  for (int i=0; i<5; i++){
+    if(empleado[i].salario>salMax){
+      salMax=empleado[i].salario;
+      numEmpleMax = i;
+    }
+    promedio=promedio+empleado[i].salario;
+  } 
+  promedio=promedio/5;
+  //la suma de todos los salario dividido la cantidad de empleados
+  printf("El empleado con mayor salario es: %s \n", empleado[numEmpleMax].nombre);         
+  printf("Con un salario maximo de: %f \n", salMax);
+  printf("El promedio de salario es: %f \n", promedio);
+}
+
+void mostrarEmpleados(struct empleado empleado[5]){
+  //MOSTRAR DATOS
+  for (int x=0; x<5; x++){
+    printf("Nombre: %s\n", empleado[x].nombre);
+    printf("Edad: %d\n", empleado[x].edad);
+    printf("Salario: %f\n", empleado[x].salario);
+  }
+}
